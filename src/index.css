@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --font-anton: "Anton", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  --color-prime-green: #d1ff1a; /* Adjusted to a vibrant energetic lime green */
+  --color-prime-dark: #0a0a0a;
+}
+
+@layer base {
+  html, body {
+    @apply bg-prime-dark text-white font-inter m-0 p-0 overscroll-none select-none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-anton tracking-wider uppercase;
+  }
+
+  /* Lenis strict base styles */
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+  
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
+  /* Hide default scrollbar */
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+}
+
+@layer utilities {
+  .text-stroke {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+    color: transparent;
+  }
+  .text-stroke-hover:hover {
+    -webkit-text-stroke: 1px var(--color-prime-green);
+    color: var(--color-prime-green);
+  }
+}
