@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -12,15 +12,15 @@ export default function ProductShot(props) {
     setAspect(imgAspect);
   });
 
+  // Correct color space
   texture.colorSpace = THREE.SRGBColorSpace;
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (meshRef.current) {
-      // Base idle wobble combined with reactive mouse tracking for 3D depth
       const idleX = Math.sin(state.clock.elapsedTime) * 0.05;
       const idleY = Math.cos(state.clock.elapsedTime * 0.4) * 0.05;
 
-      const mouseX = state.pointer.x * 0.4  ;
+      const mouseX = state.pointer.x * 0.4;
       const mouseY = -state.pointer.y * 0.4;
 
       meshRef.current.rotation.x = THREE.MathUtils.lerp(
@@ -28,6 +28,7 @@ export default function ProductShot(props) {
         idleX + mouseY,
         0.1,
       );
+
       meshRef.current.rotation.y = THREE.MathUtils.lerp(
         meshRef.current.rotation.y,
         idleY + mouseX,
@@ -36,7 +37,6 @@ export default function ProductShot(props) {
     }
   });
 
-  // We scale the plane appropriately
   const height = 4.5;
   const width = height * aspect;
 
@@ -44,17 +44,13 @@ export default function ProductShot(props) {
     <group {...props}>
       <mesh ref={meshRef}>
         <planeGeometry args={[width, height, 32, 32]} />
-        {/* Adjusted values to prevent image wash-out / glare while maintaining depth */}
-        <meshPhysicalMaterial
+
+        {/* 🔥 FIXED: No lighting, no glare, true colors */}
+        <meshBasicMaterial
           map={texture}
           transparent={true}
-          roughness={0.4}
-          metalness={0.0}
-          clearcoat={0.0}
-          envMapIntensity={0.6}
-          side={THREE.DoubleSide}
           alphaTest={0.5}
-          depthWrite={false}
+          side={THREE.DoubleSide}
         />
       </mesh>
     </group>
