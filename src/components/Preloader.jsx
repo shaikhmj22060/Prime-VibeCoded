@@ -27,7 +27,7 @@ export default function Preloader({ onComplete }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] bg-[#0a0a0a] flex flex-col"
+      className="fixed inset-0 z-100 bg-prime-dark flex flex-col"
       animate={done ? { clipPath: 'inset(0 0 100% 0)' } : { clipPath: 'inset(0 0 0% 0)' }}
       initial={{ clipPath: 'inset(0 0 0% 0)' }}
       transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1] }}
@@ -79,7 +79,7 @@ export default function Preloader({ onComplete }) {
 
           {/* Accent color overlay at fill boundary */}
           <motion.div
-            className="absolute left-0 right-0 h-[2px] bg-[#ff3366]"
+            className="absolute left-0 right-0 h-0.5 bg-[#ff3366]"
             style={{
               bottom: `${progress}%`,
               opacity: progress > 2 && progress < 98 ? 1 : 0,
